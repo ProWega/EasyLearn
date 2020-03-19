@@ -9,7 +9,8 @@ public class PlayButtonController : MonoBehaviour
     public GameObject vrBtn;
     public GameObject arBtn;
     public VideoPlayer video;
-   
+    [HideInInspector]
+    public bool status;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -36,8 +37,9 @@ public class PlayButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        status = gameObject.GetComponent<SpriteRenderer>().enabled;
         // Обработка ошибки
-        if (video.isPlaying && gameObject.GetComponent<SpriteRenderer>().enabled == true)
+        if (!MainBookController.mainMenu && gameObject.GetComponent<SpriteRenderer>().enabled == true)
         {
             TurnOffPlayBtn();
         }
@@ -47,7 +49,8 @@ public class PlayButtonController : MonoBehaviour
     {
 
         ImageTracking_Video.VideoPlayerBookAgent.SetVideoIsPlaying();
-        
+        MainBookController.mainMenu = false;
+        MainBookController.Video = true;
         Debug.Log("Отдана команда на запуск видео");
         TurnOffPlayBtn();
     }

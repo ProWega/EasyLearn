@@ -8,7 +8,9 @@ public class PlayVidBtnController : MonoBehaviour
     private VideoPlayer video;
     public static bool isMustPlaying = true;
     public Sprite play;
+    public Sprite playPressed;
     public Sprite pause;
+    public Sprite pausePressed;
     private SpriteRenderer rend;
     // Start is called before the first frame update
     private void Awake()
@@ -34,8 +36,8 @@ public class PlayVidBtnController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<SpriteRenderer>().enabled = GetComponentInParent<MeshRenderer>().enabled;
-        gameObject.GetComponent<BoxCollider>().enabled = GetComponentInParent<MeshRenderer>().enabled;
+        gameObject.GetComponent<SpriteRenderer>().enabled = transform.parent.GetComponentInParent<MeshRenderer>().enabled;
+        gameObject.GetComponent<BoxCollider>().enabled = transform.parent.GetComponentInParent<MeshRenderer>().enabled;
     }
     private void OnMouseUpAsButton()
     {
@@ -48,8 +50,30 @@ public class PlayVidBtnController : MonoBehaviour
         else
         {
             rend.sprite = pause;
+            cantTouch();
             video.Play();
             isMustPlaying = true;
         }
+    }
+
+    IEnumerator cantTouch()
+    {
+        TouchVideoController.canTouch = false;
+        yield return new WaitForSeconds(2);
+        TouchVideoController.canTouch = true;
+    }
+    private void OnMouseDown()
+    {
+        if (!video.isPlaying)
+            rend.sprite = playPressed;
+        else
+            rend.sprite = pausePressed;
+    }
+    private void OnMouseUp()
+    {
+        if (!video.isPlaying)
+            rend.sprite = play;
+        else
+            rend.sprite = pause;
     }
 }

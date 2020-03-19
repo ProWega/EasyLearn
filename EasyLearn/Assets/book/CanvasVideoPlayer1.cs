@@ -13,13 +13,18 @@ public class CanvasVideoPlayer1 : MonoBehaviour
 
     private VideoPlayer video;
     private RawImage image;
+    private void Awake()
+    {
+        video = GetComponent<VideoPlayer>();
+        image = GetComponent<RawImage>();
+    }
     // Start is called before the first frame update
     void Start()
     {
         video = GetComponent<VideoPlayer>();
         image = GetComponent<RawImage>();
 
-        StartVideo();
+       
     }
 
     // Update is called once per frame
@@ -28,13 +33,20 @@ public class CanvasVideoPlayer1 : MonoBehaviour
         
         
     }
-
-    void StartVideo()
+    private void OnEnable()
     {
-        StartCoroutine(PlayVideo());
+        StartVideo(CanvasController.url, CanvasController.time);
     }
-    IEnumerator PlayVideo()
+
+    public void StartVideo(string url, double time)
     {
+        StartCoroutine(PlayVideo(url, time));
+    }
+    IEnumerator PlayVideo(string url, double time)
+    {
+        if (video == null)
+            Debug.Log("Video = null");
+        video.url = url;
         video.Prepare();
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
         while (!video.isPrepared)
@@ -44,5 +56,10 @@ public class CanvasVideoPlayer1 : MonoBehaviour
         }
         image.texture = video.texture;
         video.Play();
+        if (video.canSetTime)
+        {
+            video.time = time;
+            Debug.Log("Time seted");
+        }
     }
 }

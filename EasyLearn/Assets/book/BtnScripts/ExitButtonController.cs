@@ -33,6 +33,8 @@ public class ExitButtonController : MonoBehaviour
     {
         ImageTracking_Video.VideoPlayerBookAgent.SetVideoIsPlaying();
         TurnOffExitBtn();
+        MainBookController.mainMenu = true;
+        MainBookController.Video = false;
         Debug.Log("Выход из режима видео");
     }
 

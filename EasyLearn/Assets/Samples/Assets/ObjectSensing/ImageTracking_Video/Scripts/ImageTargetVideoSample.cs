@@ -28,10 +28,10 @@ namespace ImageTracking_Video
 
         private void Update()
         {
-            UIText.text = "Video AspectRatio:" + Environment.NewLine;
+            //UIText.text = "Video AspectRatio:" + Environment.NewLine;
             foreach (var p in players)
             {
-                UIText.text += "\t" + p.name + ": " + p.aspectRatio + Environment.NewLine;
+                //UIText.text += "\t" + p.name + ": " + p.aspectRatio + Environment.NewLine;
             }
         }
 

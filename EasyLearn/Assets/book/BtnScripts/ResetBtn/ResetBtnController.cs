@@ -21,7 +21,7 @@ public class ResetBtnController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        canRendering = GetComponentInParent<MeshRenderer>().enabled;
+        canRendering = transform.parent.GetComponentInParent<MeshRenderer>().enabled;
         gameObject.GetComponent<BoxCollider>().enabled = canRendering;
     }
     private void OnMouseUpAsButton()
